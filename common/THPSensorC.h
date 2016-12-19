@@ -16,8 +16,8 @@
 enum {
   /* Default sampling period. */
   DEFAULT_INTERVAL = 256,
-
-  AM_THPSENSOR = 0x93
+  NDATA = 10,
+  AM_THPSENSOR = 0x193
 };
 
 typedef nx_struct THPSensor {
@@ -25,10 +25,10 @@ typedef nx_struct THPSensor {
   nx_uint16_t interval; /* Samping period. */
   nx_uint16_t id; /* Mote id of sending mote. */
   nx_uint16_t count; /* The readings are samples count */
-  nx_uint16_t TempData;
-  nx_uint16_t HumidityData;
-  nx_uint16_t PhotoData;
-  nx_uint32_t timeStamp;
+  nx_uint16_t tempData[NDATA];
+  nx_uint16_t humidityData[NDATA];
+  nx_uint16_t photoData[NDATA];
+  nx_uint32_t timeStamp[NDATA]; /* Time when Sample photo data. */)
 } THPSensor_t;
 
 #endif

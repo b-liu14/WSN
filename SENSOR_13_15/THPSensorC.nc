@@ -89,7 +89,6 @@ implementation
       if (!sendBusy && sizeof local <= call AMSend.maxPayloadLength()) {
         // Don't need to check for null because we've already checked length
         // above
-        local.timeStamp = call Timer.getNow();
         memcpy(call AMSend.getPayload(&sendBuf, sizeof(local)), &local, sizeof local);
         if (call AMSend.send(AM_BROADCAST_ADDR, &sendBuf, sizeof local) == SUCCESS) {
           sendBusy = TRUE;
@@ -150,6 +149,7 @@ implementation
   event void readPhoto.readDone(error_t result, uint16_t val) {
     if (result == SUCCESS){
       local.photoData[nPhoto] = val;
+      local.timeStamp[nPhoto] = Timer.getNow();
       nPhoto ++;
     }
     else {
