@@ -2,7 +2,7 @@
 #include "../common/THPSensorC.h"
 #include "SensirionSht11.h"
 
-module OscilloscopeC @safe()
+module THPSensorC @safe()
 {
     uses {
         interface Boot;

@@ -1,30 +1,58 @@
-README for TestSerial
+README for BaseStation
 Author/Contact: tinyos-help@millennium.berkeley.edu
 
 Description:
 
-TestSerial is a simple application that may be used to test that the
-TinyOS java toolchain can communicate with a mote over the serial
-port. The java application sends packets to the serial port at 1Hz:
-the packet contains an incrementing counter. When the mote application
-receives a counter packet, it displays the bottom three bits on its
-LEDs. (This application is similar to RadioCountToLeds, except that it
-operates over the serial port.) Likewise, the mote also sends packets
-to the serial port at 1Hz. Upon reception of a packet, the java
-application prints the counter's value to standard out.
+BaseStation is an application that acts as a simple Active Message
+bridge between the serial and radio links. It replaces the GenericBase
+of TinyOS 1.0 and the TOSBase of TinyOS 1.1.
 
-Java Application Usage:
-  java TestSerial [-comm <packetsource>]
+On the serial link, BaseStation sends and receives simple active
+messages (not particular radio packets): on the radio link, it sends
+radio active messages, whose format depends on the network stack being
+used. BaseStation will copy its compiled-in group ID to messages
+moving from the serial link to the radio, and will filter out incoming
+radio messages that do not contain that group ID.
 
-  If not specified, the <packetsource> defaults to sf@localhost:9002 or
-  to your MOTECOM environment variable (if defined).
+BaseStation includes queues in both directions, with a guarantee that
+once a message enters a queue, it will eventually leave on the other
+interface. The queues allow the BaseStation to handle load spikes more
+gracefully.
 
-Python Usage:
-  tos-dump /dev/ttyUSB0 57600
+BaseStation acknowledges a message arriving over the serial link only if
+that message was successfully enqueued for delivery to the radio link.
+
+The LEDS are programmed to toggle as follows:
+
+RED Toggle         - Message bridged from serial to radio
+GREEN Toggle       - Message bridged from radio to serial
+YELLOW/BLUE Toggle - Dropped message due to queue overflow 
+                     in either direction
+
+When using a CC2420 radio, several default preprocessor configurations
+are defined in the Makefile:
+  * CC2420_NO_ACKNOWLEDGEMENTS
+    - Prevents the base station from falsly acknowledging packets
+  * CC2420_NO_ADDRESS_RECOGNITION
+    - Allows the base station to sniff packets from any transmitter
+
+Other combinations can be defined to meet your application's needs:
+  * CC2420_NO_ADDRESS_RECOGNITION only
+    - Sniff all packets, but acknowledge packets only if they
+      are sent to the base station's address
+
+  * Removing all preprocessor definitions in the Makefile
+    - Only accept packets destined for the base station's address,
+      and acknowledge those packets
+
 
 Tools:
 
+support/sdk/java/net/tinyos/sf/SerialForwarder  
+
+See the TinyOS Tutorial on Mote-PC serial communication and
+SerialForwarder on docs.tinyos.net for more details.
+
 Known bugs/limitations:
 
-None.
 
