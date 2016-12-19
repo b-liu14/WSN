@@ -1,11 +1,11 @@
 <tos_image>
   <ident>
-    <uidhash>34E492B1L</uidhash>
+    <uidhash>4D46FA69L</uidhash>
     <hostname>liubin-laptop</hostname>
     <username>liubin</username>
     <appname>BaseStationC</appname>
     <userhash>BCDE5802L</userhash>
-    <timestamp>58574666L</timestamp>
+    <timestamp>5857EFD0L</timestamp>
     <deluge_support>no</deluge_support>
     <platform>telosb</platform>
   </ident>

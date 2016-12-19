@@ -35,7 +35,7 @@
  * @author David Gay
  * Revision:	$Id: BaseStationP.nc,v 1.10 2008/06/23 20:25:14 regehr Exp $
  */
-  
+ 
 /* 
  * BaseStationP bridges packets between a serial channel and the radio.
  * Messages moving from serial to radio will be tagged with the group
@@ -46,7 +46,7 @@
 #include "AM.h"
 #include "Serial.h"
 
-module BaseStationP @safe() {
+ module BaseStationP @safe() {
   uses {
     interface Boot;
     interface SplitControl as SerialControl;
@@ -134,14 +134,14 @@ implementation
   message_t* ONE receive(message_t* ONE msg, void* payload, uint8_t len);
   
   event message_t *RadioSnoop.receive[am_id_t id](message_t *msg,
-						    void *payload,
-						    uint8_t len) {
+    void *payload,
+    uint8_t len) {
     return receive(msg, payload, len);
   }
   
   event message_t *RadioReceive.receive[am_id_t id](message_t *msg,
-						    void *payload,
-						    uint8_t len) {
+    void *payload,
+    uint8_t len) {
     return receive(msg, payload, len);
   }
 
@@ -150,151 +150,151 @@ implementation
 
     atomic {
       if (!uartFull)
-	{
-	  ret = uartQueue[uartIn];
-	  uartQueue[uartIn] = msg;
-
-	  uartIn = (uartIn + 1) % UART_QUEUE_LEN;
-	
-	  if (uartIn == uartOut)
-	    uartFull = TRUE;
-
-	  if (!uartBusy)
-	    {
-	      post uartSendTask();
-	      uartBusy = TRUE;
-	    }
-	}
-      else
-	dropBlink();
-    }
-    
-    return ret;
-  }
-
-  uint8_t tmpLen;
-  
-  task void uartSendTask() {
-    uint8_t len;
-    am_id_t id;
-    am_addr_t addr, src;
-    message_t* msg;
-    atomic
-      if (uartIn == uartOut && !uartFull)
-	{
-	  uartBusy = FALSE;
-	  return;
-	}
-
-    msg = uartQueue[uartOut];
-    tmpLen = len = call RadioPacket.payloadLength(msg);
-    id = call RadioAMPacket.type(msg);
-    addr = call RadioAMPacket.destination(msg);
-    src = call RadioAMPacket.source(msg);
-    call UartPacket.clear(msg);
-    call UartAMPacket.setSource(msg, src);
-
-    if (call UartSend.send[id](addr, uartQueue[uartOut], len) == SUCCESS)
-      call Leds.led1Toggle();
-    else
       {
+       ret = uartQueue[uartIn];
+       uartQueue[uartIn] = msg;
+
+       uartIn = (uartIn + 1) % UART_QUEUE_LEN;
+       
+       if (uartIn == uartOut)
+         uartFull = TRUE;
+
+       if (!uartBusy)
+       {
+         post uartSendTask();
+         uartBusy = TRUE;
+       }
+     }
+     else
+       dropBlink();
+   }
+   
+   return ret;
+ }
+
+ uint8_t tmpLen;
+ 
+ task void uartSendTask() {
+  uint8_t len;
+  am_id_t id;
+  am_addr_t addr, src;
+  message_t* msg;
+  atomic
+  if (uartIn == uartOut && !uartFull)
+  {
+   uartBusy = FALSE;
+   return;
+ }
+
+ msg = uartQueue[uartOut];
+ tmpLen = len = call RadioPacket.payloadLength(msg);
+ id = call RadioAMPacket.type(msg);
+ addr = call RadioAMPacket.destination(msg);
+ src = call RadioAMPacket.source(msg);
+ call UartPacket.clear(msg);
+ call UartAMPacket.setSource(msg, src);
+
+ if (call UartSend.send[id](addr, uartQueue[uartOut], len) == SUCCESS)
+  call Leds.led1Toggle();
+else
+{
 	failBlink();
 	post uartSendTask();
-      }
-  }
+}
+}
 
-  event void UartSend.sendDone[am_id_t id](message_t* msg, error_t error) {
-    if (error != SUCCESS)
-      failBlink();
-    else
-      atomic
-	if (msg == uartQueue[uartOut])
-	  {
-	    if (++uartOut >= UART_QUEUE_LEN)
-	      uartOut = 0;
-	    if (uartFull)
-	      uartFull = FALSE;
-	  }
-    post uartSendTask();
-  }
-
-  event message_t *UartReceive.receive[am_id_t id](message_t *msg,
-						   void *payload,
-						   uint8_t len) {
-    message_t *ret = msg;
-    bool reflectToken = FALSE;
-
+event void UartSend.sendDone[am_id_t id](message_t* msg, error_t error) {
+  if (error != SUCCESS)
+    failBlink();
+  else
     atomic
-      if (!radioFull)
-	{
-	  reflectToken = TRUE;
-	  ret = radioQueue[radioIn];
-	  radioQueue[radioIn] = msg;
-	  if (++radioIn >= RADIO_QUEUE_LEN)
-	    radioIn = 0;
-	  if (radioIn == radioOut)
-	    radioFull = TRUE;
+  if (msg == uartQueue[uartOut])
+  {
+   if (++uartOut >= UART_QUEUE_LEN)
+     uartOut = 0;
+   if (uartFull)
+     uartFull = FALSE;
+ }
+ post uartSendTask();
+}
 
-	  if (!radioBusy)
-	    {
-	      post radioSendTask();
-	      radioBusy = TRUE;
-	    }
-	}
-      else
-	dropBlink();
+event message_t *UartReceive.receive[am_id_t id](message_t *msg,
+ void *payload,
+ uint8_t len) {
+  message_t *ret = msg;
+  bool reflectToken = FALSE;
 
-    if (reflectToken) {
+  atomic
+  if (!radioFull)
+  {
+   reflectToken = TRUE;
+   ret = radioQueue[radioIn];
+   radioQueue[radioIn] = msg;
+   if (++radioIn >= RADIO_QUEUE_LEN)
+     radioIn = 0;
+   if (radioIn == radioOut)
+     radioFull = TRUE;
+
+   if (!radioBusy)
+   {
+     post radioSendTask();
+     radioBusy = TRUE;
+   }
+ }
+ else
+   dropBlink();
+
+ if (reflectToken) {
       //call UartTokenReceive.ReflectToken(Token);
-    }
-    
-    return ret;
-  }
+ }
+ 
+ return ret;
+}
 
-  task void radioSendTask() {
-    uint8_t len;
-    am_id_t id;
-    am_addr_t addr,source;
-    message_t* msg;
-    
-    atomic
-      if (radioIn == radioOut && !radioFull)
-	{
-	  radioBusy = FALSE;
-	  return;
-	}
+task void radioSendTask() {
+  uint8_t len;
+  am_id_t id;
+  am_addr_t addr,source;
+  message_t* msg;
+  
+  atomic
+  if (radioIn == radioOut && !radioFull)
+  {
+   radioBusy = FALSE;
+   return;
+ }
 
-    msg = radioQueue[radioOut];
-    len = call UartPacket.payloadLength(msg);
-    addr = call UartAMPacket.destination(msg);
-    source = call UartAMPacket.source(msg);
-    id = call UartAMPacket.type(msg);
+ msg = radioQueue[radioOut];
+ len = call UartPacket.payloadLength(msg);
+ addr = call UartAMPacket.destination(msg);
+ source = call UartAMPacket.source(msg);
+ id = call UartAMPacket.type(msg);
 
-    call RadioPacket.clear(msg);
-    call RadioAMPacket.setSource(msg, source);
-    
-    if (call RadioSend.send[id](addr, msg, len) == SUCCESS)
-      call Leds.led0Toggle();
-    else
-      {
+ call RadioPacket.clear(msg);
+ call RadioAMPacket.setSource(msg, source);
+ 
+ if (call RadioSend.send[id](addr, msg, len) == SUCCESS)
+  call Leds.led0Toggle();
+else
+{
 	failBlink();
 	post radioSendTask();
-      }
-  }
+}
+}
 
-  event void RadioSend.sendDone[am_id_t id](message_t* msg, error_t error) {
-    if (error != SUCCESS)
-      failBlink();
-    else
-      atomic
-	if (msg == radioQueue[radioOut])
-	  {
-	    if (++radioOut >= RADIO_QUEUE_LEN)
-	      radioOut = 0;
-	    if (radioFull)
-	      radioFull = FALSE;
-	  }
-    
-    post radioSendTask();
-  }
+event void RadioSend.sendDone[am_id_t id](message_t* msg, error_t error) {
+  if (error != SUCCESS)
+    failBlink();
+  else
+    atomic
+  if (msg == radioQueue[radioOut])
+  {
+   if (++radioOut >= RADIO_QUEUE_LEN)
+     radioOut = 0;
+   if (radioFull)
+     radioFull = FALSE;
+ }
+ 
+ post radioSendTask();
+}
 }  
