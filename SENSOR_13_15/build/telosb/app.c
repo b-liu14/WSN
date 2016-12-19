@@ -952,27 +952,8 @@ static inline void TOSH_MAKE_FLASH_CS_OUTPUT()  ;
 static inline void TOSH_SET_FLASH_HOLD_PIN()  ;
 #line 89
 static inline void TOSH_MAKE_FLASH_HOLD_OUTPUT()  ;
-# 29 "/opt/tinyos-2.x/tos/lib/timer/Timer.h"
-typedef struct __nesc_unnamed4261 {
-#line 29
-  int notUsed;
-} 
-#line 29
-TMilli;
-typedef struct __nesc_unnamed4262 {
-#line 30
-  int notUsed;
-} 
-#line 30
-T32khz;
-typedef struct __nesc_unnamed4263 {
-#line 31
-  int notUsed;
-} 
-#line 31
-TMicro;
 # 16 "../common/THPSensorC.h"
-enum __nesc_unnamed4264 {
+enum __nesc_unnamed4261 {
 
   DEFAULT_INTERVAL = 256, 
   NDATA = 10, 
@@ -1000,17 +981,36 @@ typedef nx_struct THPSensor {
   nx_uint32_t timeStamp;
 } __attribute__((packed)) THPSensor_t;
 # 37 "/opt/tinyos-2.x/tos/chips/sht11/SensirionSht11.h"
-enum __nesc_unnamed4265 {
+enum __nesc_unnamed4262 {
   SHT11_TEMPERATURE_BITS = 14, 
   SHT11_HUMIDITY_BITS = 12
 };
 
-enum __nesc_unnamed4266 {
+enum __nesc_unnamed4263 {
   SHT11_STATUS_LOW_RES_BIT = 1 << 0, 
   SHT11_STATUS_NO_RELOAD_BIT = 1 << 1, 
   SHT11_STATUS_HEATER_ON_BIT = 1 << 2, 
   SHT11_STATUS_LOW_BATTERY_BIT = 1 << 6
 };
+# 29 "/opt/tinyos-2.x/tos/lib/timer/Timer.h"
+typedef struct __nesc_unnamed4264 {
+#line 29
+  int notUsed;
+} 
+#line 29
+TMilli;
+typedef struct __nesc_unnamed4265 {
+#line 30
+  int notUsed;
+} 
+#line 30
+T32khz;
+typedef struct __nesc_unnamed4266 {
+#line 31
+  int notUsed;
+} 
+#line 31
+TMicro;
 # 39 "/opt/tinyos-2.x/tos/chips/cc2420/CC2420.h"
 typedef uint8_t cc2420_status_t;
 #line 93
@@ -4694,15 +4694,14 @@ static void THPSensorC__startTimer(void );
 
 static inline void THPSensorC__RadioControl__startDone(error_t error);
 
-
-
 static inline void THPSensorC__RadioControl__stopDone(error_t error);
 
 
-static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payload, uint8_t len);
-#line 90
+static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payload, 
+uint8_t len);
+#line 87
 static inline void THPSensorC__Timer__fired(void );
-#line 125
+#line 123
 static void THPSensorC__readTemp__readDone(error_t result, uint16_t val);
 
 
@@ -4715,7 +4714,7 @@ static void THPSensorC__readTemp__readDone(error_t result, uint16_t val);
 
 
 static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val);
-#line 152
+#line 150
 static void THPSensorC__readPhoto__readDone(error_t result, uint16_t val);
 
 
@@ -15417,15 +15416,15 @@ static inline void THPSensorC__report_sent(void )
   THPSensorC__Leds__led1Toggle();
 }
 
-#line 162
+#line 160
 static inline void THPSensorC__AMSend__sendDone(message_t *msg, error_t error)
-#line 162
+#line 160
 {
   if (error == SUCCESS) {
     THPSensorC__report_sent();
     }
   else {
-#line 166
+#line 164
     THPSensorC__report_problem();
     }
   THPSensorC__sendBusy = FALSE;
@@ -20248,14 +20247,14 @@ inline static uint8_t THPSensorC__AMSend__maxPayloadLength(void ){
 #line 112
 }
 #line 112
-# 90 "THPSensorC.nc"
+# 87 "THPSensorC.nc"
 static inline void THPSensorC__Timer__fired(void )
-#line 90
+#line 87
 {
   unsigned int __nesc_temp43;
   unsigned char *__nesc_temp42;
 
-#line 91
+#line 88
   if (THPSensorC__nTemp == NDATA && THPSensorC__nHumidity == NDATA && THPSensorC__nPhoto == NDATA) {
       if (!THPSensorC__sendBusy && sizeof THPSensorC__local <= THPSensorC__AMSend__maxPayloadLength()) {
 
@@ -20263,24 +20262,23 @@ static inline void THPSensorC__Timer__fired(void )
           __nesc_hton_uint32(THPSensorC__local.timeStamp.data, THPSensorC__Timer__getNow());
           memcpy(THPSensorC__AMSend__getPayload(&THPSensorC__sendBuf, sizeof THPSensorC__local), &THPSensorC__local, sizeof THPSensorC__local);
           if (THPSensorC__AMSend__send(AM_BROADCAST_ADDR, &THPSensorC__sendBuf, sizeof THPSensorC__local) == SUCCESS) {
-            THPSensorC__sendBusy = TRUE;
+              THPSensorC__sendBusy = TRUE;
             }
-        }
-#line 100
-      if (!THPSensorC__sendBusy) {
-        THPSensorC__report_problem();
-        }
-#line 102
-      THPSensorC__nTemp = 0;
-      THPSensorC__nHumidity = 0;
-      THPSensorC__nPhoto = 0;
+          if (!THPSensorC__sendBusy) {
+            THPSensorC__report_problem();
+            }
+#line 99
+          THPSensorC__nTemp = 0;
+          THPSensorC__nHumidity = 0;
+          THPSensorC__nPhoto = 0;
 
 
-      if (!THPSensorC__suppressCountChange) {
-          (__nesc_temp42 = THPSensorC__local.count.data, __nesc_hton_uint16(__nesc_temp42, (__nesc_temp43 = __nesc_ntoh_uint16(__nesc_temp42)) + 1), __nesc_temp43);
-        }
-      else {
-          THPSensorC__suppressCountChange = FALSE;
+          if (!THPSensorC__suppressCountChange) {
+              (__nesc_temp42 = THPSensorC__local.count.data, __nesc_hton_uint16(__nesc_temp42, (__nesc_temp43 = __nesc_ntoh_uint16(__nesc_temp42)) + 1), __nesc_temp43);
+            }
+          else {
+              THPSensorC__suppressCountChange = FALSE;
+            }
         }
     }
   if (THPSensorC__nTemp < NDATA) {
@@ -21010,12 +21008,14 @@ static inline void THPSensorC__report_received(void )
   THPSensorC__Leds__led2Toggle();
 }
 
-#line 65
-static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payload, uint8_t len)
-#line 65
+#line 63
+static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payload, 
+uint8_t len)
+#line 64
 {
   THPSensor_t *sensor_msg = payload;
 
+#line 66
   THPSensorC__report_received();
 
 
@@ -23472,9 +23472,9 @@ static inline void CC2420CsmaP__sendDone_task__runTask(void )
   CC2420CsmaP__Send__sendDone(CC2420CsmaP__m_msg, packetErr);
 }
 
-# 62 "THPSensorC.nc"
+# 60 "THPSensorC.nc"
 static inline void THPSensorC__RadioControl__stopDone(error_t error)
-#line 62
+#line 60
 {
 }
 
@@ -23497,6 +23497,7 @@ static inline void CC2420CsmaP__stopDone_task__runTask(void )
 static inline void THPSensorC__RadioControl__startDone(error_t error)
 #line 58
 {
+#line 58
   THPSensorC__startTimer();
 }
 
@@ -27860,9 +27861,9 @@ static void AdcP__ResourceRead__granted(uint8_t client)
     }
 }
 
-# 152 "THPSensorC.nc"
+# 150 "THPSensorC.nc"
 static void THPSensorC__readPhoto__readDone(error_t result, uint16_t val)
-#line 152
+#line 150
 {
   if (result == SUCCESS) {
       __nesc_hton_uint16(THPSensorC__local.photoData[THPSensorC__nPhoto].data, val);
@@ -28403,9 +28404,9 @@ static error_t /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__rele
   return FAIL;
 }
 
-# 136 "THPSensorC.nc"
+# 134 "THPSensorC.nc"
 static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
-#line 136
+#line 134
 {
   while (THPSensorC__nTemp < THPSensorC__nHumidity) {
     }
@@ -28415,7 +28416,7 @@ static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
       double RH_linear = -2.0468 + 0.0367 * val + -1.595 / 1000000 * val * val;
       double RH_true = (temp - 25) * (0.01 + 0.00008 * (double )val) + RH_linear;
 
-#line 144
+#line 142
       __nesc_hton_uint16(THPSensorC__local.humidityData[THPSensorC__nHumidity].data, (uint16_t )RH_true);
       THPSensorC__nHumidity++;
     }
@@ -28424,14 +28425,14 @@ static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
     }
 }
 
-#line 125
+#line 123
 static void THPSensorC__readTemp__readDone(error_t result, uint16_t val)
-#line 125
+#line 123
 {
   if (result == SUCCESS) {
       double T = -39.6 + 0.01 * (double )val;
 
-#line 128
+#line 126
       __nesc_hton_uint16(THPSensorC__local.tempData[THPSensorC__nTemp].data, (uint16_t )T);
       THPSensorC__nTemp++;
     }
