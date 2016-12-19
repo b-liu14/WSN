@@ -2,7 +2,7 @@
 #include "../common/THPSensorC.h"
 #include "SensirionSht11.h"
 
-module OscilloscopeC @safe()
+module THPSensorC @safe()
 {
     uses {
         interface Boot;
@@ -22,12 +22,12 @@ implementation
     bool sendBusy;
 
 
-    /* Current local state - interval, version and accumulated readings */
+    /* Current local state - interval, version and accumulated ns */
     THPSensor_t local;
 
-    uint8_t readingTemp; /* 0 -> not reading, 1 -> reading */
-    uint8_t readingHumidity; 
-    uint8_t readingPhoto;
+    uint8_t nTemp; /* 0 -> NDATA */
+    uint8_t nHumidity; 
+    uint8_t nPhoto;
 
     /* When we head an Oscilloscope message, we check it's sample count. If
          it's ahead of ours, we "jump" forwards (set our count to the received
@@ -50,9 +50,9 @@ implementation
 
     void startTimer() {
         call Timer.startPeriodic(local.interval);
-        readingTemp = 0;
-        readingHumidity = 0;
-        readingPhoto = 0;
+        nTemp = 0;
+        nHumidity = 0;
+        nPhoto = 0;
     }
 
     event void RadioControl.startDone(error_t error) {
@@ -88,7 +88,7 @@ implementation
          - read next sample
     */
     event void Timer.fired() {
-        if (readingTemp == 1 && readingHumidity == 1 && readingPhoto == 1) {
+        if (nTemp == NDATA && nHumidity == NDATA && nPhoto == NDATA) {
             if (!sendBusy && sizeof local <= call AMSend.maxPayloadLength()) {
                  // Don't need to check for null because we've already checked length
                 // above
@@ -99,9 +99,9 @@ implementation
             }
             if (!sendBusy)
                 report_problem();
-            readingTemp = 0;
-            readingHumidity = 0;
-            readingPhoto = 0;
+            nTemp = 0;
+            nHumidity = 0;
+            nPhoto = 0;
             /* Part 2 of cheap "time sync": increment our count if we didn't
                  jump ahead. */
             if (!suppressCountChange) {
@@ -111,46 +111,51 @@ implementation
                 suppressCountChange = FALSE;
             }
         }
-        if ((readingTemp == 0 && call readTemp.read() != SUCCESS) || 
-            (readingHumidity == 0 && call readHumidity.read() != SUCCESS) || 
-            (readingPhoto == 0 && call readPhoto.read() != SUCCESS)) {
-            report_problem();
+        if(nTemp < NDATA) {
+            call readTemp.read();
+        }
+        if(nHumidity < NDATA) {
+            call readHumidity.read();
+        }
+        if(nPhoto < NDATA) {
+            call readPhoto.read();
         }
     }
 
     event void readTemp.readDone(error_t result, uint16_t val) {
-        if (result == SUCCESS){
+        if (result == SUCCESS ){
             double T = -39.6 + 0.01*(double)(val);
-            local.TempData = (uint16_t)(T);
-            readingTemp = 1;
+            local.tempData[nTemp] = (uint16_t)(T);
+            nTemp ++;
         }
         else {
-            local.TempData = 0xffff;
+            report_problem();
         }
     }
 
     event void readHumidity.readDone(error_t result, uint16_t val) {
-        while(readingTemp == 0) {
+        while(nTemp < nHumidity) {
             // do nothing.
         }
         if (result == SUCCESS){
-            double RH_linear = -2.0468 + 0.0367*(double)(val) + (-1.5955/1000/1000)*(val*val);
-            double RH_true = (local.TempData-25)*(0.01+0.00008*(double)(val))+RH_linear;
-            local.HumidityData = (uint16_t)(RH_true);
-            readingHumidity = 1;
+            uint16_t temp = local.tempData[nHumidity];
+            double RH_linear = -2.0468 + 0.0367*val + (-1.595/1000000)*val*val;
+            double RH_true = (temp-25)*(0.01+0.00008*(double)(val))+RH_linear;
+            local.humidityData[nHumidity] = (uint16_t)(RH_true);
+            nHumidity ++;
         }
         else {
-            local.HumidityData = 0xffff;
+            report_problem();
         }
     }
 
     event void readPhoto.readDone(error_t result, uint16_t val) {
         if (result == SUCCESS){
-            local.PhotoData = val;
-            readingPhoto = 1;
+            local.photoData[nPhoto] = val;
+            nPhoto ++;
         }
         else {
-            local.PhotoData = 0xffff;
+            report_problem();
         }
     }
 
