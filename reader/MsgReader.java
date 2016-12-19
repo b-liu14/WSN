@@ -21,6 +21,7 @@ public class MsgReader implements net.tinyos.message.MessageListener {
   }
   
   public void messageReceived(int to, Message message) {
+    
     byte[] data = message.dataGet();
     for (int i = 2; i < 7; i ++) {
       int value = ((data[2*i] << 8) &0x0000ff00) | (data[2*i+1]) & 0x000000ff;
