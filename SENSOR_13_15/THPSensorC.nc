@@ -2,7 +2,7 @@
 #include "../common/THPSensorC.h"
 #include "SensirionSht11.h"
 
-module THPSensorC @safe()
+module OscilloscopeC @safe()
 {
     uses {
         interface Boot;
@@ -120,8 +120,8 @@ implementation
 
     event void readTemp.readDone(error_t result, uint16_t val) {
         if (result == SUCCESS){
-            val = -40.1+ 0.01*val;
-            local.TempData = val;
+            double T = -39.6 + 0.01*(double)(val);
+            local.TempData = (uint16_t)(T);
             readingTemp = 1;
         }
         else {
@@ -134,9 +134,9 @@ implementation
             // do nothing.
         }
         if (result == SUCCESS){
-            uint16_t tmp = -4 + 4*val/100 + (-28/1000/10000)*(val*val);
-            tmp = (local.TempData-25)*(1/100+8*val/100/1000)+tmp;
-            local.HumidityData = tmp;
+            double RH_linear = -2.0468 + 0.0367*(double)(val) + (-1.5955/1000/1000)*(val*val);
+            double RH_true = (local.TempData-25)*(0.01+0.00008*(double)(val))+RH_linear;
+            local.HumidityData = (uint16_t)(RH_true);
             readingHumidity = 1;
         }
         else {
