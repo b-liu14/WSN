@@ -149,7 +149,7 @@ implementation
   event void readPhoto.readDone(error_t result, uint16_t val) {
     if (result == SUCCESS){
       local.photoData[nPhoto] = val;
-      local.timeStamp[nPhoto] = Timer.getNow();
+      local.timeStamp[nPhoto] = call Timer.getNow();
       nPhoto ++;
     }
     else {

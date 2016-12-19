@@ -978,7 +978,7 @@ typedef nx_struct THPSensor {
   nx_uint16_t tempData[NDATA];
   nx_uint16_t humidityData[NDATA];
   nx_uint16_t photoData[NDATA];
-  nx_uint32_t timeStamp;
+  nx_uint32_t timeStamp[NDATA];
 } __attribute__((packed)) THPSensor_t;
 # 37 "/opt/tinyos-2.x/tos/chips/sht11/SensirionSht11.h"
 enum __nesc_unnamed4262 {
@@ -3333,11 +3333,11 @@ static resource_client_id_t /*Msp430UsartShare0P.ArbiterC.Queue*/FcfsResourceQue
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__requested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 51 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__immediateRequested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 55 "/opt/tinyos-2.x/tos/interfaces/ResourceConfigure.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceConfigure__default__unconfigure(
 # 60 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -3357,23 +3357,23 @@ static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceDefaultO
 # 110 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static error_t /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__release(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 87 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static error_t /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__immediateRequest(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 78 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static error_t /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__request(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__default__granted(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 118 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static bool /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__isOwner(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 80 "/opt/tinyos-2.x/tos/interfaces/ArbiterInfo.nc"
 static bool /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ArbiterInfo__inUse(void );
 
@@ -3543,15 +3543,15 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__f
 #line 125
 static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__getNow(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0);
+uint8_t arg_0x40eb49f0);
 # 72 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0);
+uint8_t arg_0x40eb49f0);
 # 53 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__startPeriodic(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0, 
+uint8_t arg_0x40eb49f0, 
 # 53 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
 uint32_t dt);
 
@@ -3564,7 +3564,7 @@ uint32_t dt);
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__startOneShot(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0, 
+uint8_t arg_0x40eb49f0, 
 # 62 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
 uint32_t dt);
 
@@ -3573,7 +3573,7 @@ uint32_t dt);
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__stop(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0);
+uint8_t arg_0x40eb49f0);
 # 71 "/opt/tinyos-2.x/tos/lib/timer/Counter.nc"
 static void /*HilTimerMilliC.CounterToLocalTimeC*/CounterToLocalTimeC__1__Counter__overflow(void );
 # 41 "/opt/tinyos-2.x/tos/interfaces/Random.nc"
@@ -4107,7 +4107,7 @@ static resource_client_id_t /*HplSensirionSht11C.Arbiter.Queue*/FcfsResourceQueu
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__default__requested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 55 "/opt/tinyos-2.x/tos/interfaces/ResourceConfigure.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceConfigure__default__unconfigure(
 # 60 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -4130,15 +4130,15 @@ static bool /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceDefaultOw
 # 110 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static error_t /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__release(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 78 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static error_t /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__request(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__default__granted(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 64 "/opt/tinyos-2.x/tos/interfaces/TaskBasic.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__grantedTask__runTask(void );
 # 92 "/opt/tinyos-2.x/tos/interfaces/SplitControl.nc"
@@ -4180,7 +4180,7 @@ error_t result, AdcP__Read__val_t val);
 # 66 "/opt/tinyos-2.x/tos/interfaces/ReadNow.nc"
 static void AdcP__ReadNow__default__readDone(
 # 39 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcP.nc"
-uint8_t arg_0x4110a720, 
+uint8_t arg_0x41109720, 
 # 66 "/opt/tinyos-2.x/tos/interfaces/ReadNow.nc"
 error_t result, AdcP__ReadNow__val_t val);
 # 58 "/opt/tinyos-2.x/tos/interfaces/AdcConfigure.nc"
@@ -4417,7 +4417,7 @@ static error_t AdcStreamP__Init__init(void );
 # 58 "/opt/tinyos-2.x/tos/interfaces/AdcConfigure.nc"
 static AdcStreamP__AdcConfigure__adc_config_t AdcStreamP__AdcConfigure__default__getConfiguration(
 # 53 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcStreamP.nc"
-uint8_t arg_0x412b6010);
+uint8_t arg_0x412b5010);
 # 189 "/opt/tinyos-2.x/tos/chips/msp430/adc12/Msp430Adc12SingleChannel.nc"
 static error_t AdcStreamP__SingleChannel__default__getData(
 # 52 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcStreamP.nc"
@@ -4701,7 +4701,7 @@ static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payl
 uint8_t len);
 #line 87
 static inline void THPSensorC__Timer__fired(void );
-#line 123
+#line 122
 static void THPSensorC__readTemp__readDone(error_t result, uint16_t val);
 
 
@@ -4714,8 +4714,9 @@ static void THPSensorC__readTemp__readDone(error_t result, uint16_t val);
 
 
 static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val);
-#line 150
+#line 149
 static void THPSensorC__readPhoto__readDone(error_t result, uint16_t val);
+
 
 
 
@@ -7155,11 +7156,11 @@ static inline error_t /*Msp430UsartShare0P.ArbiterC.Queue*/FcfsResourceQueueC__1
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__requested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 51 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__immediateRequested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 55 "/opt/tinyos-2.x/tos/interfaces/ResourceConfigure.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceConfigure__unconfigure(
 # 60 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -7183,7 +7184,7 @@ static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceDefaultO
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__granted(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 56 "/opt/tinyos-2.x/tos/interfaces/TaskBasic.nc"
 static error_t /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__grantedTask__postTask(void );
 # 75 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -7982,7 +7983,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__s
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(
 # 37 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x40eb59f0);
+uint8_t arg_0x40eb49f0);
 #line 60
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0____nesc_unnamed4350 {
 #line 60
@@ -9042,7 +9043,7 @@ static inline error_t /*HplSensirionSht11C.Arbiter.Queue*/FcfsResourceQueueC__2_
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__requested(
 # 55 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c96c10);
+uint8_t arg_0x40c95c10);
 # 55 "/opt/tinyos-2.x/tos/interfaces/ResourceConfigure.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceConfigure__unconfigure(
 # 60 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -9064,7 +9065,7 @@ static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceDefaultOw
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
 static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__granted(
 # 54 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
-uint8_t arg_0x40c961e8);
+uint8_t arg_0x40c951e8);
 # 56 "/opt/tinyos-2.x/tos/interfaces/TaskBasic.nc"
 static error_t /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__grantedTask__postTask(void );
 # 75 "/opt/tinyos-2.x/tos/system/ArbiterP.nc"
@@ -9238,7 +9239,7 @@ error_t result, AdcP__Read__val_t val);
 # 66 "/opt/tinyos-2.x/tos/interfaces/ReadNow.nc"
 static void AdcP__ReadNow__readDone(
 # 39 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcP.nc"
-uint8_t arg_0x4110a720, 
+uint8_t arg_0x41109720, 
 # 66 "/opt/tinyos-2.x/tos/interfaces/ReadNow.nc"
 error_t result, AdcP__ReadNow__val_t val);
 # 58 "/opt/tinyos-2.x/tos/interfaces/AdcConfigure.nc"
@@ -9925,7 +9926,7 @@ static void AdcStreamP__Alarm__startAt(AdcStreamP__Alarm__size_type t0, AdcStrea
 # 58 "/opt/tinyos-2.x/tos/interfaces/AdcConfigure.nc"
 static AdcStreamP__AdcConfigure__adc_config_t AdcStreamP__AdcConfigure__getConfiguration(
 # 53 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcStreamP.nc"
-uint8_t arg_0x412b6010);
+uint8_t arg_0x412b5010);
 # 189 "/opt/tinyos-2.x/tos/chips/msp430/adc12/Msp430Adc12SingleChannel.nc"
 static error_t AdcStreamP__SingleChannel__getData(
 # 52 "/opt/tinyos-2.x/tos/chips/msp430/adc12/AdcStreamP.nc"
@@ -11758,9 +11759,9 @@ static inline void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceR
 }
 
 # 51 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
-inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__immediateRequested(uint8_t arg_0x40c96c10){
+inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__immediateRequested(uint8_t arg_0x40c95c10){
 #line 51
-    /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__immediateRequested(arg_0x40c96c10);
+    /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__immediateRequested(arg_0x40c95c10);
 #line 51
 }
 #line 51
@@ -12204,9 +12205,9 @@ static inline void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceR
 }
 
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
-inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__requested(uint8_t arg_0x40c96c10){
+inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__requested(uint8_t arg_0x40c95c10){
 #line 43
-    /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__requested(arg_0x40c96c10);
+    /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__ResourceRequested__default__requested(arg_0x40c95c10);
 #line 43
 }
 #line 43
@@ -17138,13 +17139,13 @@ static inline const msp430adc12_channel_config_t *AdcStreamP__AdcConfigure__defa
 }
 
 # 58 "/opt/tinyos-2.x/tos/interfaces/AdcConfigure.nc"
-inline static AdcStreamP__AdcConfigure__adc_config_t AdcStreamP__AdcConfigure__getConfiguration(uint8_t arg_0x412b6010){
+inline static AdcStreamP__AdcConfigure__adc_config_t AdcStreamP__AdcConfigure__getConfiguration(uint8_t arg_0x412b5010){
 #line 58
   struct __nesc_unnamed4299 const *__nesc_result;
 #line 58
 
 #line 58
-  switch (arg_0x412b6010) {
+  switch (arg_0x412b5010) {
 #line 58
     case /*THPSensorAppC.HamamatsuS1087ParC.AdcReadStreamClientC*/AdcReadStreamClientC__0__RSCLIENT:
 #line 58
@@ -17154,7 +17155,7 @@ inline static AdcStreamP__AdcConfigure__adc_config_t AdcStreamP__AdcConfigure__g
 #line 58
     default:
 #line 58
-      __nesc_result = AdcStreamP__AdcConfigure__default__getConfiguration(arg_0x412b6010);
+      __nesc_result = AdcStreamP__AdcConfigure__default__getConfiguration(arg_0x412b5010);
 #line 58
       break;
 #line 58
@@ -17747,6 +17748,27 @@ inline static error_t AdcP__SingleChannel__getData(uint8_t arg_0x410fbd18){
 #line 189
 }
 #line 189
+# 178 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
+static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__getNow(uint8_t num)
+{
+  return /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__getNow();
+}
+
+# 125 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
+inline static uint32_t THPSensorC__Timer__getNow(void ){
+#line 125
+  unsigned long __nesc_result;
+#line 125
+
+#line 125
+  __nesc_result = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__getNow(1U);
+#line 125
+
+#line 125
+  return __nesc_result;
+#line 125
+}
+#line 125
 # 165 "/opt/tinyos-2.x/tos/system/SimpleArbiterP.nc"
 static inline void /*Msp430Adc12P.Arbiter.Arbiter*/SimpleArbiterP__0__Resource__default__granted(uint8_t id)
 #line 165
@@ -18582,9 +18604,9 @@ static inline void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__
 }
 
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
-inline static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__granted(uint8_t arg_0x40c961e8){
+inline static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__granted(uint8_t arg_0x40c951e8){
 #line 92
-  switch (arg_0x40c961e8) {
+  switch (arg_0x40c951e8) {
 #line 92
     case /*THPSensorAppC.SensirionSht11C*/SensirionSht11C__0__TEMP_KEY:
 #line 92
@@ -18600,7 +18622,7 @@ inline static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__
 #line 92
     default:
 #line 92
-      /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__default__granted(arg_0x40c961e8);
+      /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__default__granted(arg_0x40c951e8);
 #line 92
       break;
 #line 92
@@ -20138,27 +20160,6 @@ inline static void * THPSensorC__AMSend__getPayload(message_t * msg, uint8_t len
 #line 124
 }
 #line 124
-# 178 "/opt/tinyos-2.x/tos/lib/timer/VirtualizeTimerC.nc"
-static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__getNow(uint8_t num)
-{
-  return /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__getNow();
-}
-
-# 125 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
-inline static uint32_t THPSensorC__Timer__getNow(void ){
-#line 125
-  unsigned long __nesc_result;
-#line 125
-
-#line 125
-  __nesc_result = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__getNow(1U);
-#line 125
-
-#line 125
-  return __nesc_result;
-#line 125
-}
-#line 125
 # 101 "/opt/tinyos-2.x/tos/interfaces/Send.nc"
 inline static uint8_t CC2420ActiveMessageP__SubSend__maxPayloadLength(void ){
 #line 101
@@ -20259,7 +20260,6 @@ static inline void THPSensorC__Timer__fired(void )
       if (!THPSensorC__sendBusy && sizeof THPSensorC__local <= THPSensorC__AMSend__maxPayloadLength()) {
 
 
-          __nesc_hton_uint32(THPSensorC__local.timeStamp.data, THPSensorC__Timer__getNow());
           memcpy(THPSensorC__AMSend__getPayload(&THPSensorC__sendBuf, sizeof THPSensorC__local), &THPSensorC__local, sizeof THPSensorC__local);
           if (THPSensorC__AMSend__send(AM_BROADCAST_ADDR, &THPSensorC__sendBuf, sizeof THPSensorC__local) == SUCCESS) {
               THPSensorC__sendBusy = TRUE;
@@ -20267,7 +20267,7 @@ static inline void THPSensorC__Timer__fired(void )
           if (!THPSensorC__sendBusy) {
             THPSensorC__report_problem();
             }
-#line 99
+#line 98
           THPSensorC__nTemp = 0;
           THPSensorC__nHumidity = 0;
           THPSensorC__nPhoto = 0;
@@ -20670,9 +20670,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 }
 
 # 72 "/opt/tinyos-2.x/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x40eb59f0){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x40eb49f0){
 #line 72
-  switch (arg_0x40eb59f0) {
+  switch (arg_0x40eb49f0) {
 #line 72
     case 1U:
 #line 72
@@ -20706,7 +20706,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 #line 72
     default:
 #line 72
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x40eb59f0);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x40eb49f0);
 #line 72
       break;
 #line 72
@@ -20721,9 +20721,9 @@ static inline void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRe
 }
 
 # 43 "/opt/tinyos-2.x/tos/interfaces/ResourceRequested.nc"
-inline static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__requested(uint8_t arg_0x40c96c10){
+inline static void /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__requested(uint8_t arg_0x40c95c10){
 #line 43
-    /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__default__requested(arg_0x40c96c10);
+    /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__ResourceRequested__default__requested(arg_0x40c95c10);
 #line 43
 }
 #line 43
@@ -21598,9 +21598,9 @@ static inline void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource_
 }
 
 # 92 "/opt/tinyos-2.x/tos/interfaces/Resource.nc"
-inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__granted(uint8_t arg_0x40c961e8){
+inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__granted(uint8_t arg_0x40c951e8){
 #line 92
-  switch (arg_0x40c961e8) {
+  switch (arg_0x40c951e8) {
 #line 92
     case /*CC2420SpiWireC.HplCC2420SpiC.SpiC.UsartC*/Msp430Usart0C__0__CLIENT_ID:
 #line 92
@@ -21610,7 +21610,7 @@ inline static void /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource_
 #line 92
     default:
 #line 92
-      /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__default__granted(arg_0x40c961e8);
+      /*Msp430UsartShare0P.ArbiterC.Arbiter*/ArbiterP__0__Resource__default__granted(arg_0x40c951e8);
 #line 92
       break;
 #line 92
@@ -25843,9 +25843,9 @@ static inline void AdcP__ReadNow__default__readDone(uint8_t client, error_t resu
 }
 
 # 66 "/opt/tinyos-2.x/tos/interfaces/ReadNow.nc"
-inline static void AdcP__ReadNow__readDone(uint8_t arg_0x4110a720, error_t result, AdcP__ReadNow__val_t val){
+inline static void AdcP__ReadNow__readDone(uint8_t arg_0x41109720, error_t result, AdcP__ReadNow__val_t val){
 #line 66
-    AdcP__ReadNow__default__readDone(arg_0x4110a720, result, val);
+    AdcP__ReadNow__default__readDone(arg_0x41109720, result, val);
 #line 66
 }
 #line 66
@@ -27861,12 +27861,13 @@ static void AdcP__ResourceRead__granted(uint8_t client)
     }
 }
 
-# 150 "THPSensorC.nc"
+# 149 "THPSensorC.nc"
 static void THPSensorC__readPhoto__readDone(error_t result, uint16_t val)
-#line 150
+#line 149
 {
   if (result == SUCCESS) {
       __nesc_hton_uint16(THPSensorC__local.photoData[THPSensorC__nPhoto].data, val);
+      __nesc_hton_uint32(THPSensorC__local.timeStamp[THPSensorC__nPhoto].data, THPSensorC__Timer__getNow());
       THPSensorC__nPhoto++;
     }
   else {
@@ -28404,9 +28405,9 @@ static error_t /*HplSensirionSht11C.Arbiter.Arbiter*/ArbiterP__1__Resource__rele
   return FAIL;
 }
 
-# 134 "THPSensorC.nc"
+# 133 "THPSensorC.nc"
 static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
-#line 134
+#line 133
 {
   while (THPSensorC__nTemp < THPSensorC__nHumidity) {
     }
@@ -28416,7 +28417,7 @@ static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
       double RH_linear = -2.0468 + 0.0367 * val + -1.595 / 1000000 * val * val;
       double RH_true = (temp - 25) * (0.01 + 0.00008 * (double )val) + RH_linear;
 
-#line 142
+#line 141
       __nesc_hton_uint16(THPSensorC__local.humidityData[THPSensorC__nHumidity].data, (uint16_t )RH_true);
       THPSensorC__nHumidity++;
     }
@@ -28425,14 +28426,14 @@ static void THPSensorC__readHumidity__readDone(error_t result, uint16_t val)
     }
 }
 
-#line 123
+#line 122
 static void THPSensorC__readTemp__readDone(error_t result, uint16_t val)
-#line 123
+#line 122
 {
   if (result == SUCCESS) {
       double T = -39.6 + 0.01 * (double )val;
 
-#line 126
+#line 125
       __nesc_hton_uint16(THPSensorC__local.tempData[THPSensorC__nTemp].data, (uint16_t )T);
       THPSensorC__nTemp++;
     }

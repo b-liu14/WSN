@@ -21,17 +21,23 @@ public class MsgReader implements net.tinyos.message.MessageListener {
   }
   
   public void messageReceived(int to, Message message) {
-    
-    byte[] data = message.dataGet();
-    for (int i = 2; i < 7; i ++) {
-      int value = ((data[2*i] << 8) &0x0000ff00) | (data[2*i+1]) & 0x000000ff;
-      System.out.print(value + " ");
+    if (msg instanceof SensorMsg) {
+      SensorMsg omsg = (SensorMsg)msg;
+      System.out.print(omsg.get_id() + " ");
+      System.out.println();
+      System.out.println(msg);
     }
-    long timeStamp = 0;
-    for (int i = 15; i < 18; i ++) {
-      timeStamp = (timeStamp << 8) | (data[i] & 0x000000ff);
-    }
-    System.out.println(timeStamp);
+
+    // byte[] data = message.dataGet();
+    // for (int i = 2; i < 7; i ++) {
+    //   int value = ((data[2*i] << 8) &0x0000ff00) | (data[2*i+1]) & 0x000000ff;
+    //   System.out.print(value + " ");
+    // }
+    // long timeStamp = 0;
+    // for (int i = 15; i < 18; i ++) {
+    //   timeStamp = (timeStamp << 8) | (data[i] & 0x000000ff);
+    // }
+    // System.out.println(timeStamp);
   }
 
   
