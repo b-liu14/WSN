@@ -1,0 +1,3 @@
+COMPONENT=THPSensorAppC
+
+include $(MAKERULES)
