@@ -21,8 +21,8 @@ class Data {
         this.parent = parent;
     }
 
-    /* Data received from mote nodeId containing NREADINGS samples from
-    messageId * NREADINGS onwards. Tell parent if this is a new node. */
+    /* Data received from mote nodeId containing NDATA samples from
+    messageId * NDATA onwards. Tell parent if this is a new node. */
     void update(int nodeId, int messageId, int readings[]) {
         if (nodeId >= nodes.length) {
             int newLength = nodes.length * 2;

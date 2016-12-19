@@ -16,7 +16,7 @@
 enum {
   /* Default sampling period. */
   DEFAULT_INTERVAL = 256,
-  NDATA = 10,
+  NDATA = 1,
   AM_THPSENSOR = 0x93
 };
 

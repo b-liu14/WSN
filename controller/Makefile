@@ -5,11 +5,11 @@ all: oscilloscope.jar
 oscilloscope.jar: Oscilloscope.class
 	jar cf $@ *.class
 
-OscilloscopeMsg.java: ../common/THPSensor.h
-	mig -target=null -java-classname=OscilloscopeMsg java ../common/THPSensor.h oscilloscope -o $@
+OscilloscopeMsg.java:
+	mig -target=null -java-classname=OscilloscopeMsg java ../common/THPSensorC.h THPSensor -o $@
 
-Constants.java: ../common/THPSensor.h
-	ncg -target=null -java-classname=Constants java ../common/THPSensor.h NREADINGS DEFAULT_INTERVAL -o $@
+Constants.java: 
+	ncg -target=null -java-classname=Constants java ../common/THPSensorC.h NDATA DEFAULT_INTERVAL -o $@
 
 Oscilloscope.class: $(wildcard *.java) $(GEN)
 	javac *.java

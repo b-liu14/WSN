@@ -69,7 +69,7 @@ import java.io.*;
 
         /* Update interval and mote data */
         periodUpdate(omsg.get_version(), omsg.get_interval());
-        data.update(omsg.get_id(), omsg.get_count(), omsg.get_readings());
+        data.update(omsg.get_id(), omsg.get_count(), omsg.get_photoData());
 
         /* Inform the GUI that new data showed up */
         window.newData();

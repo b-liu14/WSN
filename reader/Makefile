@@ -1,7 +1,7 @@
 all: MsgReader.class SensorMsg.class
 
-MsgReader.class: MsgReader.java
-	javac $^
+MsgReader.class: MsgReader.java SensorMsg.class
+	javac MsgReader.java 
 
 SensorMsg.class: SensorMsg.java
 	javac $^

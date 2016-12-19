@@ -1,3 +1,5 @@
+#include "printf.h"
+
 configuration THPSensorAppC{
 
 }

@@ -13,10 +13,10 @@
  */
 class Node {
     /* Data is hold in an array whose size is a multiple of INCREMENT, and
-       INCREMENT itself must be a multiple of Constant.NREADINGS. This
+       INCREMENT itself must be a multiple of Constant.NDATA. This
        simplifies handling the extension and clipping of old data
        (see setEnd) */
-    final static int INCREMENT = 100 * Constants.NREADINGS;
+    final static int INCREMENT = 100 * Constants.NDATA;
     final static int MAX_SIZE = 100 * INCREMENT; // Must be multiple of INCREMENT
 
     /* The mote's identifier */
@@ -80,11 +80,11 @@ for (int i = dataEnd < dataStart ? dataStart : dataEnd;
 
 }
 
-    /* Data received containing NREADINGS samples from messageId * NREADINGS 
+    /* Data received containing NDATA samples from messageId * NDATA 
     onwards */
     void update(int messageId, int[] readings) {
-        int start = messageId * Constants.NREADINGS;
-        setEnd(start, start + Constants.NREADINGS);
+        int start = messageId * Constants.NDATA;
+        setEnd(start, start + Constants.NDATA);
         for (int i = 0; i < readings.length; i++) {
             data[start - dataStart + i] = readings[i];
         }

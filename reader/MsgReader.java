@@ -20,12 +20,24 @@ public class MsgReader implements net.tinyos.message.MessageListener {
   public void start() {
   }
   
-  public void messageReceived(int to, Message message) {
+  public void messageReceived(int to, Message msg) {
     if (msg instanceof SensorMsg) {
       SensorMsg omsg = (SensorMsg)msg;
-      System.out.print(omsg.get_id() + " ");
-      System.out.println();
-      System.out.println(msg);
+      int id = omsg.get_id();
+      int count = omsg.get_count();
+      int[] tempData = omsg.get_tempData();
+      int[] humidityData = omsg.get_humidityData();
+      int[] photoData = omsg.get_photoData();
+      long[] timeStamp = omsg.get_timeStamp();
+      for (int i = 0; i < tempData.length; i ++) {
+        System.out.print(id + " ");
+        System.out.print(count + " ");
+        System.out.print(tempData[i] + " ");
+        System.out.print(humidityData[i] + " ");
+        System.out.print(photoData[i] + " ");
+        System.out.print(timeStamp[i] + " ");
+        System.out.println();
+      }
     }
 
     // byte[] data = message.dataGet();

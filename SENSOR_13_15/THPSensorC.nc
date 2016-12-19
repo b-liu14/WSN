@@ -1,6 +1,7 @@
 #include "../common/THPSensorC.h"
 #include "SensirionSht11.h"
 #include "Timer.h"
+#include "printf.h"
 
 module THPSensorC @safe()
 {
@@ -85,7 +86,7 @@ implementation
   - if local sample buffer is full, send accumulated samples
   - read next sample */
   event void Timer.fired() {
-    if (nTemp == NDATA && nHumidity == NDATA && nPhoto == NDATA) {
+    if (nTemp >= NDATA && nHumidity >= NDATA && nPhoto >= NDATA) {
       if (!sendBusy && sizeof local <= call AMSend.maxPayloadLength()) {
         // Don't need to check for null because we've already checked length
         // above
@@ -93,19 +94,19 @@ implementation
         if (call AMSend.send(AM_BROADCAST_ADDR, &sendBuf, sizeof local) == SUCCESS) {
           sendBusy = TRUE;
         }
-        if (!sendBusy)
-          report_problem();
-        nTemp = 0;
-        nHumidity = 0;
-        nPhoto = 0;
-        /* Part 2 of cheap "time sync": increment our count if we didn't
-           jump ahead. */
-        if (!suppressCountChange) {
-          local.count++;
-        }
-        else {
-          suppressCountChange = FALSE;
-        }
+      }
+      if (!sendBusy)
+        report_problem();
+      nTemp = 0;
+      nHumidity = 0;
+      nPhoto = 0;
+      /* Part 2 of cheap "time sync": increment our count if we didn't
+         jump ahead. */
+      if (!suppressCountChange) {
+        local.count++;
+      }
+      else {
+        suppressCountChange = FALSE;
       }
     }
     if(nTemp < NDATA) {
@@ -148,6 +149,7 @@ implementation
 
   event void readPhoto.readDone(error_t result, uint16_t val) {
     if (result == SUCCESS){
+      printf("photoData raw_data = %u\n", val);
       local.photoData[nPhoto] = val;
       local.timeStamp[nPhoto] = call Timer.getNow();
       nPhoto ++;
