@@ -20,6 +20,7 @@ module THPSensorC @safe()
 implementation
 {
   message_t sendBuf;
+  message_t sendBuf2;
   bool sendBusy;
 
 
@@ -74,6 +75,8 @@ implementation
 
       event void RadioControl.stopDone(error_t error) {}
 
+	THPSensor_t *tmp;
+
       // receive packets
       event message_t *Receive.receive(message_t * msg, void *payload, uint8_t len) {
         THPSensor_t *sensor_msg = payload;
@@ -92,10 +95,10 @@ implementation
         } 
         // transit message from normal node
         else if (sensor_msg->id == NORMAL_NODE_ID){
-          printf("received a packat from node %u\n", sensor_msg->id);
-          memcpy(call AMSend.getPayload(&sendBuf, sizeof(local)), msg, sizeof local);
-          
-          if (call AMSend.send(dest_node_id, &sendBuf, sizeof local) == SUCCESS) {
+	  tmp = call AMSend.getPayload(&sendBuf2, sizeof(local));
+          memcpy(tmp, sensor_msg, sizeof local);
+          printf("received a packet from node %u\n", tmp->id);
+          if (call AMSend.send(dest_node_id, &sendBuf2, sizeof local) == SUCCESS) {
             sendBusy = TRUE;
           }
         }
@@ -113,6 +116,11 @@ implementation
       local.timeStamp[0] = call Timer.getNow();
       printf("before send: T=%u, H=%u, P=%u, time=%lu\n",
         local.tempData[0], local.humidityData[0], local.photoData[0], local.timeStamp[0]);
+
+	if (!suppressCountChange) {
+        local.count++;
+      }
+      suppressCountChange = FALSE;
       memcpy(call AMSend.getPayload(&sendBuf, sizeof(local)), &local, sizeof local);
       
       if (call AMSend.send(dest_node_id, &sendBuf, sizeof local) == SUCCESS) {
@@ -127,10 +135,6 @@ implementation
       nPhoto = 0;
       /* Part 2 of cheap "time sync": increment our count if we didn't
          jump ahead. */
-      if (!suppressCountChange) {
-        local.count++;
-      }
-      suppressCountChange = FALSE;
     }
     if(!TRbusy && !HRbusy && !PRbusy && (nTemp < NDATA) && (nHumidity < NDATA) && (nPhoto < NDATA)) {
       call readTemp.read();
