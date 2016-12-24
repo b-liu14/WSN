@@ -1,0 +1,3 @@
+COMPONENT=AggregationHelperAppC
+
+include $(MAKERULES)

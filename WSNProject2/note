@@ -1,0 +1,4 @@
+ACKSender 0->receive
+broadcaster 0->send
+core 0->sendResult 1->send_lack_seq 2->receive
+helper 0->send_file_data 1->receive_lack_seq 2->receive_data_from_broadcaster
