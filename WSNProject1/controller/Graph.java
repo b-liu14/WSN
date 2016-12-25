@@ -69,7 +69,7 @@ class Graph extends JPanel
 
     Graph(Window parent) {
     this.parent = parent;
-    gy0 = 0; gy1 = 0xffff;
+    gy0 = 0; gy1 = 200;
     gx0 = 0; gx1 = MIN_WIDTH << scale;
     }
 

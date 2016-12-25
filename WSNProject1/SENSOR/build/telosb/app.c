@@ -1458,9 +1458,9 @@ enum __nesc_unnamed4269 {
   DEFAULT_INTERVAL = 100, 
   NDATA = 1, 
   AM_THPSENSOR = 0x93, 
-  BASE_ID = 14, 
-  TRANSIT_NODE_ID = 13, 
-  NORMAL_NODE_ID = 15
+  BASE_ID = 8, 
+  TRANSIT_NODE_ID = 7, 
+  NORMAL_NODE_ID = 9
 };
 
 

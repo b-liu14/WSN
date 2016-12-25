@@ -150,7 +150,8 @@ implementation
     message_t *ret = msg;
     // drop all the packet except the packet from transit node.
     THPSensor_t *sensor_msg = payload;
-    if(sensor_msg->id !=  TRANSIT_NODE_ID)
+    am_addr_t src = call RadioAMPacket.source(msg);
+    if(src !=  TRANSIT_NODE_ID)
       return msg;
 
     atomic {
