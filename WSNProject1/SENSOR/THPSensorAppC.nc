@@ -22,4 +22,5 @@ implementation {
   THPSensorC.readTemp -> SensirionSht11C.Temperature;
   THPSensorC.readHumidity -> SensirionSht11C.Humidity;
   THPSensorC.readPhoto -> HamamatsuS1087ParC;
+  THPSensorC.RadioAMPacket -> ActiveMessageC;
 }

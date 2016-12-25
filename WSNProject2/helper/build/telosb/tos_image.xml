@@ -1,11 +1,11 @@
 <tos_image>
   <ident>
-    <uidhash>1ED4DBABL</uidhash>
-    <hostname>liubin-laptop</hostname>
-    <username>liubin</username>
+    <uidhash>5EA2C80DL</uidhash>
+    <hostname>szp-TinyOS</hostname>
+    <username>szp</username>
     <appname>AggregationHelp</appname>
-    <userhash>BCDE5802L</userhash>
-    <timestamp>585EACCAL</timestamp>
+    <userhash>4D276034L</userhash>
+    <timestamp>585F6A7FL</timestamp>
     <deluge_support>no</deluge_support>
     <platform>telosb</platform>
   </ident>

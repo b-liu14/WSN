@@ -15,6 +15,7 @@ module THPSensorC @safe()
     interface Read<uint16_t> as readTemp;
     interface Read<uint16_t> as readHumidity;
     interface Read<uint16_t> as readPhoto;
+    interface AMPacket as RadioAMPacket;
   }
 }
 implementation
@@ -81,20 +82,9 @@ implementation
       event message_t *Receive.receive(message_t * msg, void *payload, uint8_t len) {
         THPSensor_t *sensor_msg = payload;
         report_received();
-        // control message from BASE
-        if(sensor_msg->id == BASE_ID) {
-          if (sensor_msg->version > local.version) {
-            local.version = sensor_msg->version;
-            local.interval = sensor_msg->interval;
-            startTimer();
-          }
-          if (sensor_msg->count > local.count) {
-            local.count = sensor_msg->count;
-            suppressCountChange = TRUE;
-          }  
-        } 
+        
         // transit message from normal node
-        else if (sensor_msg->id == NORMAL_NODE_ID){
+        if (sensor_msg->id == NORMAL_NODE_ID){
 	  tmp = call AMSend.getPayload(&sendBuf2, sizeof(local));
           memcpy(tmp, sensor_msg, sizeof local);
           printf("received a packet from node %u\n", tmp->id);
@@ -102,6 +92,18 @@ implementation
             sendBusy = TRUE;
           }
         }
+	// control message from BASE
+        else if( call RadioAMPacket.source(msg) ==  BASE_ID){
+          //if (sensor_msg->version > local.version) {
+            local.version = sensor_msg->version;
+            local.interval = sensor_msg->interval;
+            startTimer();
+          //}
+          if (sensor_msg->count > local.count) {
+            local.count = sensor_msg->count;
+            suppressCountChange = TRUE;
+          }  
+        } 
         return msg;
       }
 

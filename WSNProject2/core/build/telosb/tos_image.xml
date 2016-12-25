@@ -1,11 +1,11 @@
 <tos_image>
   <ident>
-    <uidhash>49A401D6L</uidhash>
+    <uidhash>D4F137D5L</uidhash>
     <hostname>szp-TinyOS</hostname>
     <username>szp</username>
     <appname>AggregationCore</appname>
     <userhash>4D276034L</userhash>
-    <timestamp>585F3331L</timestamp>
+    <timestamp>585F6B38L</timestamp>
     <deluge_support>no</deluge_support>
     <platform>telosb</platform>
   </ident>
