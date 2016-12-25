@@ -5340,7 +5340,7 @@ static uint32_t THPSensorC__Timer__getNow(void );
 static void THPSensorC__Timer__startPeriodic(uint32_t dt);
 # 22 "THPSensorC.nc"
 message_t THPSensorC__sendBuf;
-
+message_t THPSensorC__sendBuf2;
 bool THPSensorC__sendBusy;
 
 
@@ -23228,10 +23228,10 @@ static inline message_t *THPSensorC__Receive__receive(message_t *msg, void *payl
     }
   else {
     if (__nesc_ntoh_uint16(sensor_msg->id.data) == NORMAL_NODE_ID) {
-        THPSensorC__tmp = THPSensorC__AMSend__getPayload(&THPSensorC__sendBuf, sizeof THPSensorC__local);
+        THPSensorC__tmp = THPSensorC__AMSend__getPayload(&THPSensorC__sendBuf2, sizeof THPSensorC__local);
         memcpy(THPSensorC__tmp, sensor_msg, sizeof THPSensorC__local);
         printf("received a packet from node %u\n", __nesc_ntoh_uint16(THPSensorC__tmp->id.data));
-        if (THPSensorC__AMSend__send(THPSensorC__dest_node_id, &THPSensorC__sendBuf, sizeof THPSensorC__local) == SUCCESS) {
+        if (THPSensorC__AMSend__send(THPSensorC__dest_node_id, &THPSensorC__sendBuf2, sizeof THPSensorC__local) == SUCCESS) {
             THPSensorC__sendBusy = TRUE;
           }
       }
